@@ -21,7 +21,7 @@ function App() {
                       <Components.Input type='email' placeholder='Email' />
                       <Components.Input type='password' placeholder='Password' />
                       <Components.Anchor href='#'>Forgot your password?</Components.Anchor>
-                      <Components.Button>Sigin In</Components.Button>
+                      <Components.Button>Sign In</Components.Button>
                   </Components.Form>
              </Components.SignInContainer>
 
@@ -29,9 +29,9 @@ function App() {
                  <Components.Overlay signinIn={signIn}>
 
                  <Components.LeftOverlayPanel signinIn={signIn}>
-                     <Components.Title>Welcome Back!</Components.Title>
+                     <Components.Title>CafeConnect</Components.Title>
                      <Components.Paragraph>
-                         To keep connected with us please login with your personal info
+                         Check the availability of your favorite items in your local cafeteria!
                      </Components.Paragraph>
                      <Components.GhostButton onClick={() => toggle(true)}>
                          Sign In
@@ -39,12 +39,12 @@ function App() {
                      </Components.LeftOverlayPanel>
 
                      <Components.RightOverlayPanel signinIn={signIn}>
-                       <Components.Title>Hello, Friend!</Components.Title>
+                       <Components.Title>CafeConnect</Components.Title>
                        <Components.Paragraph>
-                           Enter Your personal details and start journey with us
+                           Sign Up to view the menu of your local cafeteria!
                        </Components.Paragraph>
                            <Components.GhostButton onClick={() => toggle(false)}>
-                               Sigin Up
+                               Sign Up
                            </Components.GhostButton> 
                      </Components.RightOverlayPanel>
  
