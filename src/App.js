@@ -15,17 +15,6 @@ function App() {
         </Components.Form>
       </Components.SignUpContainer>
 
-<<<<<<< Updated upstream
-             <Components.SignInContainer signinIn={signIn}>
-                  <Components.Form>
-                      <Components.Title>Sign in</Components.Title>
-                      <Components.Input type='email' placeholder='Email' />
-                      <Components.Input type='password' placeholder='Password' />
-                      <Components.Anchor href='#'>Forgot your password?</Components.Anchor>
-                      <Components.Button>Sign In</Components.Button>
-                  </Components.Form>
-             </Components.SignInContainer>
-=======
       <Components.SignInContainer signinIn={signIn}>
         <Components.Form>
           <Components.Title>Sign in</Components.Title>
@@ -35,7 +24,6 @@ function App() {
           <Components.Button>Sign In</Components.Button>
         </Components.Form>
       </Components.SignInContainer>
->>>>>>> Stashed changes
 
       <Components.OverlayContainer signinIn={signIn}>
         <Components.Overlay signinIn={signIn}>
@@ -50,33 +38,6 @@ function App() {
             </Components.GhostButton>
           </Components.LeftOverlayPanel>
 
-<<<<<<< Updated upstream
-                 <Components.LeftOverlayPanel signinIn={signIn}>
-                     <Components.Title>CafeConnect</Components.Title>
-                     <Components.Paragraph>
-                         Check the availability of your favorite items in your local cafeteria!
-                     </Components.Paragraph>
-                     <Components.GhostButton onClick={() => toggle(true)}>
-                         Sign In
-                     </Components.GhostButton>
-                     </Components.LeftOverlayPanel>
-
-                     <Components.RightOverlayPanel signinIn={signIn}>
-                       <Components.Title>CafeConnect</Components.Title>
-                       <Components.Paragraph>
-                           Sign Up to view the menu of your local cafeteria!
-                       </Components.Paragraph>
-                           <Components.GhostButton onClick={() => toggle(false)}>
-                               Sign Up
-                           </Components.GhostButton> 
-                     </Components.RightOverlayPanel>
- 
-                 </Components.Overlay>
-             </Components.OverlayContainer>
-
-         </Components.Container>
-     )
-=======
           <Components.RightOverlayPanel signinIn={signIn}>
             <Components.Title>CafeConnect</Components.Title>
             <Components.Paragraph>
@@ -90,7 +51,6 @@ function App() {
       </Components.OverlayContainer>
     </Components.Container>
   );
->>>>>>> Stashed changes
 }
 
 export default App;
