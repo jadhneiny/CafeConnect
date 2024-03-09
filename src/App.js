@@ -3,17 +3,44 @@ import * as Components from "./Components";
 
 function App() {
   const [signIn, toggle] = React.useState(true);
+  const handleSubmit = async (event) => {
+    event.preventDefault(); 
+    const formData = new FormData(event.target);
+    const data = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      password: formData.get('password'),
+    };
+
+    // Send data to the server
+    const response = await fetch('/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+      console.log('Signup successful');
+      // Success Message here
+    } else {
+      console.error('Signup failed');
+      // Handle errors here
+    }
+  };
+
   return (
     <Components.Container>
       <Components.SignUpContainer signinIn={signIn}>
-        <Components.Form>
-          <Components.Title>Create Account</Components.Title>
-          <Components.Input type="text" placeholder="Name" />
-          <Components.Input type="email" placeholder="Email" />
-          <Components.Input type="password" placeholder="Password" />
-          <Components.Button>Sign Up</Components.Button>
-        </Components.Form>
-      </Components.SignUpContainer>
+          <Components.Form onSubmit={handleSubmit}> {/* Updated this line */}
+            <Components.Title>Create Account</Components.Title>
+            <Components.Input name="name" type="text" placeholder="Name" />
+            <Components.Input name="email" type="email" placeholder="Email" />
+            <Components.Input name="password" type="password" placeholder="Password" />
+            <Components.Button type="submit">Sign Up</Components.Button>
+          </Components.Form>
+        </Components.SignUpContainer>
 
       <Components.SignInContainer signinIn={signIn}>
         <Components.Form>
