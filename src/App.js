@@ -43,12 +43,12 @@ function App() {
         </Components.SignUpContainer>
 
       <Components.SignInContainer signinIn={signIn}>
-        <Components.Form>
+        <Components.Form onSubmit={handleSignIn}> {/*updated*/}
           <Components.Title>Sign in</Components.Title>
-          <Components.Input type="email" placeholder="Email" />
-          <Components.Input type="password" placeholder="Password" />
+          <Components.Input name="email" type="email" placeholder="Email" /> {/*add name to both this line and one below*/}
+          <Components.Input name="password" type="password" placeholder="Password" />
           <Components.Anchor href="#">Forgot your password?</Components.Anchor>
-          <Components.Button>Sign In</Components.Button>
+          <Components.Button type="submit">Sign In</Components.Button> {/*updated button*/}
         </Components.Form>
       </Components.SignInContainer>
 
