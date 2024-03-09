@@ -3,7 +3,7 @@ import * as Components from "./Components";
 
 function App() {
   const [signIn, toggle] = React.useState(true);
-  const handleSubmit = async (event) => {
+  const handleSignUp = async (event) => {
     event.preventDefault(); 
     const formData = new FormData(event.target);
     const data = {
@@ -30,10 +30,38 @@ function App() {
     }
   };
 
+  const handleSignIn = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const credentials = {
+      email: formData.get('email'),
+      password: formData.get('password'),
+    };
+
+    try {
+      const response = await fetch('/signin', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(credentials),
+      });
+
+      if (response.ok) {
+        console.log('Sign in successful');
+        // Perform actions on successful sign-in, e.g., redirect or update UI
+      } else {
+        console.error('Sign in failed');
+        // Handle sign-in errors, e.g., show message to user
+      }
+    } catch (error) {
+      console.error('Network error:', error);
+      // Handle network errors
+    }
+  };
+
   return (
     <Components.Container>
       <Components.SignUpContainer signinIn={signIn}>
-          <Components.Form onSubmit={handleSubmit}> {/* Updated this line */}
+          <Components.Form onSubmit={handleSignUp}> {/* Updated this line */}
             <Components.Title>Create Account</Components.Title>
             <Components.Input name="name" type="text" placeholder="Name" />
             <Components.Input name="email" type="email" placeholder="Email" />
