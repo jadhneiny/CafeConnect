@@ -1,8 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
+import VerificationPage from './VerificationPage'; 
 import * as Components from "./Components";
 
 function App() {
-  const [signIn, toggle] = React.useState(true);
+  const [signIn, toggle] = useState(true);
+  const [isVerifying, setIsVerifying] = useState(false);
+
+  const handleSignUp = (event) => {
+    event.preventDefault();
+    setIsVerifying(true);
+  };
+
+  const returnToHome = () => {
+    setIsVerifying(false); // Reset verification state
+    toggle(true); // Optional: Reset sign-in state if necessary
+  };
+
+  if (isVerifying) {
+    return <VerificationPage returnToHome={returnToHome} />;
+  }
+
   return (
     <Components.Container>
       <Components.SignUpContainer signinIn={signIn}>
@@ -11,7 +28,9 @@ function App() {
           <Components.Input type="text" placeholder="Name" />
           <Components.Input type="email" placeholder="Email" />
           <Components.Input type="password" placeholder="Password" />
-          <Components.Button>Sign Up</Components.Button>
+          {/* <Components.Button>Sign Up</Components.Button> */}
+          <Components.Button onClick={handleSignUp}>Sign Up</Components.Button>
+
         </Components.Form>
       </Components.SignUpContainer>
 

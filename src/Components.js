@@ -158,3 +158,63 @@ export const Paragraph = styled.p`
   letter-spacing: 0.7px;
   margin: 20px 0 30px;
 `;
+export const VerificationContainer = styled(Container)`
+  background-color: #fff; // Use a subtle color or white for the background
+  display: flex; // Enable flexbox for this container
+  justify-content: center; // Horizontally center the contents
+  align-items: center; // Vertically center the contents
+  padding: 0; // Adjust padding as necessary
+`;
+// export const VerificationContainer = styled(Container)`
+//   background-color: #fff; // Set to white or another subtle color
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center; // Center content vertically
+//   height: 100vh; // Adjust height to fill the screen
+//   padding-top: 0; // Adjust padding as needed
+// `;
+
+export const VerificationForm = styled(Form)`
+  width: 100%; // Allow the form to fill the container
+  max-width: 500px; // Set a max-width for larger screens
+  background-color: transparent; // Remove any distinct background color
+  box-shadow: none; // Remove shadow if not needed
+`;
+
+export const VerificationTitle = styled(Title)`
+  color: #071952; // Adjust color for better contrast or visibility
+`;
+
+export const VerificationInput = styled(Input)`
+  margin-top: 15px;
+  margin-bottom: 20px;
+  border: 2px solid #6499e9; // Highlight the input for emphasis
+`;
+
+export const VerificationButton = styled(Button)`
+  cursor: pointer;
+  background-image: linear-gradient(45deg, #6499e9, #71b8f9);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  &:hover {
+    background-image: linear-gradient(45deg, #71b8f9, #6499e9);
+  }
+`;
+
+export const ReturnHomeButton = styled(Button)`
+  background-color: #6499e9; // Or any color that matches your theme
+  color: white;
+  background-image: linear-gradient(45deg, #6499e9, #71b8f9);
+  font-size: 8px; // Smaller font size for a smaller button
+  padding: 8px 16px; // Smaller padding
+  border: none;
+  border-radius: 20px; // Consistent with your design
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #507ac7; // Slightly darker on hover for a subtle interaction effect
+  }
+
+  margin-top: 20px; // Add some space from other elements
+`;
