@@ -6,11 +6,62 @@ function App() {
   const [signIn, toggle] = useState(true);
   const [isVerifying, setIsVerifying] = useState(false);
 
-  const handleSignUp = (event) => {
+  const handleSignUp = async (event) => {
     event.preventDefault();
-    setIsVerifying(true);
-  };
+    setIsVerifying(true); 
+    const formData = new FormData(event.target);
+    const data = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      password: formData.get('password'),
+    };
 
+        // Send data to the server
+        const response = await fetch('/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+    
+        if (response.ok) {
+          console.log('Signup successful');
+          // Success Message here
+        } else {
+          console.error('Signup failed');
+          // Handle errors here
+        }
+      };
+
+      const handleSignIn = async (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const credentials = {
+          email: formData.get('email'),
+          password: formData.get('password'),
+        };
+    
+        try {
+          const response = await fetch('/signin', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(credentials),
+          });
+    
+          if (response.ok) {
+            console.log('Sign in successful');
+            // Perform actions on successful sign-in, e.g., redirect or update UI
+          } else {
+            console.error('Sign in failed');
+            // Handle sign-in errors, e.g., show message to user
+          }
+        } catch (error) {
+          console.error('Network error:', error);
+          // Handle network errors
+        }
+      };
+    
   const returnToHome = () => {
     setIsVerifying(false); // Reset verification state
     toggle(true); // Optional: Reset sign-in state if necessary
@@ -23,24 +74,22 @@ function App() {
   return (
     <Components.Container>
       <Components.SignUpContainer signinIn={signIn}>
-        <Components.Form>
-          <Components.Title>Create Account</Components.Title>
-          <Components.Input type="text" placeholder="Name" />
-          <Components.Input type="email" placeholder="Email" />
-          <Components.Input type="password" placeholder="Password" />
-          {/* <Components.Button>Sign Up</Components.Button> */}
-          <Components.Button onClick={handleSignUp}>Sign Up</Components.Button>
-
-        </Components.Form>
-      </Components.SignUpContainer>
+          <Components.Form onSubmit={handleSignUp}> {/* Updated this line */}
+            <Components.Title>Create Account</Components.Title>
+            <Components.Input name="name" type="text" placeholder="Name" />
+            <Components.Input name="email" type="email" placeholder="Email" />
+            <Components.Input name="password" type="password" placeholder="Password" />
+            <Components.Button type="submit">Sign Up</Components.Button>
+          </Components.Form>
+        </Components.SignUpContainer>
 
       <Components.SignInContainer signinIn={signIn}>
-        <Components.Form>
+        <Components.Form onSubmit={handleSignIn}> {/*updated*/}
           <Components.Title>Sign in</Components.Title>
-          <Components.Input type="email" placeholder="Email" />
-          <Components.Input type="password" placeholder="Password" />
+          <Components.Input name="email" type="email" placeholder="Email" /> {/*add name to both this line and one below*/}
+          <Components.Input name="password" type="password" placeholder="Password" />
           <Components.Anchor href="#">Forgot your password?</Components.Anchor>
-          <Components.Button>Sign In</Components.Button>
+          <Components.Button type="submit">Sign In</Components.Button> {/*updated button*/}
         </Components.Form>
       </Components.SignInContainer>
 
