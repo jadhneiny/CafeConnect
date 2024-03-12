@@ -14,7 +14,9 @@ export const ErrorParagraph = styled.p`
   color: red; /* Set the color to red */
   font-weight: bold; /* Set the font weight to bold */
   margin-top: 10px; /* Add margin to separate from other elements */
+  text-align: center; /* Center align the text */
 `;
+
 export const SignUpContainer = styled.div`
   position: absolute;
   top: 0;

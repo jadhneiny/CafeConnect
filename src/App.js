@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import VerificationPage from "./VerificationPage";
 import {
   BrowserRouter as Router,
@@ -14,6 +14,13 @@ function App() {
   const [signIn, toggle] = useState(true);
   const [isVerifying, setIsVerifying] = useState(false);
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const [signInError, setSignInError] = useState(""); // State to store the sign-in error message
+
+  useEffect(() => {
+    if (isSignedIn) {
+      navigate("/weekdays");
+    }
+  }, [isSignedIn, navigate]);
 
   const handleSignUp = async (event) => {
     event.preventDefault();
@@ -25,7 +32,6 @@ function App() {
       password: formData.get("password"),
     };
 
-    // Send data to the server
     const response = await fetch("/signup", {
       method: "POST",
       headers: {
@@ -37,9 +43,6 @@ function App() {
     if (response.ok) {
       console.log("Signup successful");
       setIsSignedIn(true);
-      navigate("/weekdays");
-
-      // Success Message here
     } else {
       console.error("Signup failed");
       // Handle errors here
@@ -48,6 +51,7 @@ function App() {
 
   const handleSignIn = async (event) => {
     event.preventDefault();
+    setSignInError(""); // Reset the error message on a new sign-in attempt
     const formData = new FormData(event.target);
     const credentials = {
       email: formData.get("email"),
@@ -64,36 +68,35 @@ function App() {
       if (response.ok) {
         console.log("Sign in successful");
         setIsSignedIn(true);
-        navigate("/weekdays");
-        // Perform actions on successful sign-in, e.g., redirect or update UI
       } else {
-        console.error("Sign in failed");
-        // Handle sign-in errors, e.g., show message to user
+        const errorMessage = "Sign in failed"; // Default error message
+        console.error(errorMessage);
+        setSignInError(errorMessage);
       }
     } catch (error) {
       console.error("Network error:", error);
-      // Handle network errors
+      setSignInError("Network error. Please try again.");
     }
   };
 
   const returnToHome = () => {
-    setIsVerifying(false); // Reset verification state
-    toggle(true); // Optional: Reset sign-in state if necessary
+    setIsVerifying(false);
+    toggle(true);
   };
 
   if (isVerifying) {
     return <VerificationPage returnToHome={returnToHome} />;
   }
-  if (isSignedIn) {
-    navigate("/weekdays");
-    return <WeekDaysPage />;
-  }
 
   return (
     <Components.Container>
+      {/* Sign-in error message */}
+      {signInError && (
+        <Components.ErrorParagraph>{signInError}</Components.ErrorParagraph>
+      )}
+
       <Components.SignUpContainer signinIn={signIn}>
         <Components.Form onSubmit={handleSignUp}>
-          {" "}
           <Components.Title>Create Account</Components.Title>
           <Components.Input name="name" type="text" placeholder="Name" />
           <Components.Input name="email" type="email" placeholder="Email" />
@@ -108,20 +111,20 @@ function App() {
 
       <Components.SignInContainer signinIn={signIn}>
         <Components.Form onSubmit={handleSignIn}>
-          {" "}
+          {/* Error message displayed at the top of the form */}
+          {signInError && (
+            <Components.ErrorParagraph>{signInError}</Components.ErrorParagraph>
+          )}
+
           <Components.Title>Sign in</Components.Title>
-          <Components.Input
-            name="email"
-            type="email"
-            placeholder="Email"
-          />{" "}
+          <Components.Input name="email" type="email" placeholder="Email" />
           <Components.Input
             name="password"
             type="password"
             placeholder="Password"
           />
           <Components.Anchor href="#">Forgot your password?</Components.Anchor>
-          <Components.Button type="submit">Sign In</Components.Button>{" "}
+          <Components.Button type="submit">Sign In</Components.Button>
         </Components.Form>
       </Components.SignInContainer>
 
@@ -157,9 +160,8 @@ function AppWrapper() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<App />} /> {/* Main route */}
-        <Route path="/weekdays" element={<WeekDaysPage />} />{" "}
-        {/* WeekDaysPage route */}
+        <Route path="/" element={<App />} />
+        <Route path="/weekdays" element={<WeekDaysPage />} />
       </Routes>
     </Router>
   );
