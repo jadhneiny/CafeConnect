@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import VerificationPage from "./VerificationPage";
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+} from "react-router-dom";
 import * as Components from "./Components";
 import WeekDaysPage from "./WeekDaysPage";
 
@@ -32,6 +37,8 @@ function App() {
     if (response.ok) {
       console.log("Signup successful");
       setIsSignedIn(true);
+      navigate("/weekdays");
+
       // Success Message here
     } else {
       console.error("Signup failed");
@@ -57,7 +64,7 @@ function App() {
       if (response.ok) {
         console.log("Sign in successful");
         setIsSignedIn(true);
-        navigate('/weekdays');
+        navigate("/weekdays");
         // Perform actions on successful sign-in, e.g., redirect or update UI
       } else {
         console.error("Sign in failed");
@@ -78,6 +85,7 @@ function App() {
     return <VerificationPage returnToHome={returnToHome} />;
   }
   if (isSignedIn) {
+    navigate("/weekdays");
     return <WeekDaysPage />;
   }
 
@@ -150,7 +158,8 @@ function AppWrapper() {
     <Router>
       <Routes>
         <Route path="/" element={<App />} /> {/* Main route */}
-        <Route path="/weekdays" element={<WeekDaysPage />} /> {/* WeekDaysPage route */}
+        <Route path="/weekdays" element={<WeekDaysPage />} />{" "}
+        {/* WeekDaysPage route */}
       </Routes>
     </Router>
   );
