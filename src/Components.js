@@ -10,7 +10,11 @@ export const Container = styled.div`
   max-width: 100%;
   min-height: 400px;
 `;
-
+export const ErrorParagraph = styled.p`
+  color: red; /* Set the color to red */
+  font-weight: bold; /* Set the font weight to bold */
+  margin-top: 10px; /* Add margin to separate from other elements */
+`;
 export const SignUpContainer = styled.div`
   position: absolute;
   top: 0;
