@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import VerificationPage from "./VerificationPage";
 import {
   BrowserRouter as Router,
@@ -10,16 +10,10 @@ import * as Components from "./Components";
 import WeekDaysPage from "./WeekDaysPage";
 
 function App() {
-  const [navigate, setNavigate] = useState();
-  useEffect(() => {
-    setNavigate(navigate);
-  }, []);
-
+  const navigate = useNavigate();
   const [signIn, toggle] = useState(true);
   const [isVerifying, setIsVerifying] = useState(false);
   const [isSignedIn, setIsSignedIn] = useState(false);
-  const [signInError, setSignInError] = useState(null);
-  const [signUpError, setSignUpError] = useState(null);
 
   const handleSignUp = async (event) => {
     event.preventDefault();
@@ -31,29 +25,24 @@ function App() {
       password: formData.get("password"),
     };
 
-    try {
-      // Send data to the server
-      const response = await fetch("/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+    // Send data to the server
+    const response = await fetch("/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
 
-      if (response.ok) {
-        console.log("Signup successful");
-        setIsSignedIn(true);
-        navigate("/weekdays");
-        // Success Message here
-      } else {
-        const errorMessage = await response.text(); // Get error message from response
-        console.error("Signup failed:", errorMessage);
-        setSignUpError(errorMessage); // Set sign-up error message
-      }
-    } catch (error) {
-      console.error("Signup failed:", error.message);
-      setSignUpError("Network error. Please try again."); // Set sign-up error message for network error
+    if (response.ok) {
+      console.log("Signup successful");
+      setIsSignedIn(true);
+      navigate("/weekdays");
+
+      // Success Message here
+    } else {
+      console.error("Signup failed");
+      // Handle errors here
     }
   };
 
@@ -78,13 +67,12 @@ function App() {
         navigate("/weekdays");
         // Perform actions on successful sign-in, e.g., redirect or update UI
       } else {
-        const errorMessage = await response.text(); // Get error message from response
-        console.error("Sign in failed:", errorMessage);
-        setSignInError(errorMessage); // Set sign-in error message
+        console.error("Sign in failed");
+        // Handle sign-in errors, e.g., show message to user
       }
     } catch (error) {
       console.error("Network error:", error);
-      setSignInError("Network error. Please try again."); // Set sign-in error message for network error
+      // Handle network errors
     }
   };
 
@@ -103,15 +91,9 @@ function App() {
 
   return (
     <Components.Container>
-      {/* Sign-up error message */}
-      {signUpError && (
-        <Components.ErrorParagraph className="error-message">
-          {signUpError}
-        </Components.ErrorParagraph>
-      )}
-
       <Components.SignUpContainer signinIn={signIn}>
         <Components.Form onSubmit={handleSignUp}>
+          {" "}
           <Components.Title>Create Account</Components.Title>
           <Components.Input name="name" type="text" placeholder="Name" />
           <Components.Input name="email" type="email" placeholder="Email" />
@@ -124,28 +106,25 @@ function App() {
         </Components.Form>
       </Components.SignUpContainer>
 
-      {/* Sign-in error message */}
-      {signInError && (
-        <Components.ErrorParagraph className="error-message">
-          {signInError}
-        </Components.ErrorParagraph>
-      )}
-
       <Components.SignInContainer signinIn={signIn}>
         <Components.Form onSubmit={handleSignIn}>
+          {" "}
           <Components.Title>Sign in</Components.Title>
-          <Components.Input name="email" type="email" placeholder="Email" />
+          <Components.Input
+            name="email"
+            type="email"
+            placeholder="Email"
+          />{" "}
           <Components.Input
             name="password"
             type="password"
             placeholder="Password"
           />
           <Components.Anchor href="#">Forgot your password?</Components.Anchor>
-          <Components.Button type="submit">Sign In</Components.Button>
+          <Components.Button type="submit">Sign In</Components.Button>{" "}
         </Components.Form>
       </Components.SignInContainer>
 
-      {/* Overlay */}
       <Components.OverlayContainer signinIn={signIn}>
         <Components.Overlay signinIn={signIn}>
           <Components.LeftOverlayPanel signinIn={signIn}>
