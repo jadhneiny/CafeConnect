@@ -85,7 +85,6 @@ function App() {
       <Components.SignUpContainer signinIn={signIn}>
         <Components.Form onSubmit={handleSignUp}>
           {" "}
-          {/* Updated this line */}
           <Components.Title>Create Account</Components.Title>
           <Components.Input name="name" type="text" placeholder="Name" />
           <Components.Input name="email" type="email" placeholder="Email" />
@@ -101,14 +100,12 @@ function App() {
       <Components.SignInContainer signinIn={signIn}>
         <Components.Form onSubmit={handleSignIn}>
           {" "}
-          {/*updated*/}
           <Components.Title>Sign in</Components.Title>
           <Components.Input
             name="email"
             type="email"
             placeholder="Email"
           />{" "}
-          {/*add name to both this line and one below*/}
           <Components.Input
             name="password"
             type="password"
@@ -116,7 +113,6 @@ function App() {
           />
           <Components.Anchor href="#">Forgot your password?</Components.Anchor>
           <Components.Button type="submit">Sign In</Components.Button>{" "}
-          {/*updated button*/}
         </Components.Form>
       </Components.SignInContainer>
 

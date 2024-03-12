@@ -158,6 +158,7 @@ export const Paragraph = styled.p`
   letter-spacing: 0.7px;
   margin: 20px 0 30px;
 `;
+
 export const VerificationContainer = styled(Container)`
   background-color: #fff; // Use a subtle color or white for the background
   display: flex; // Enable flexbox for this container
@@ -165,15 +166,6 @@ export const VerificationContainer = styled(Container)`
   align-items: center; // Vertically center the contents
   padding: 0; // Adjust padding as necessary
 `;
-// export const VerificationContainer = styled(Container)`
-//   background-color: #fff; // Set to white or another subtle color
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center; // Center content vertically
-//   height: 100vh; // Adjust height to fill the screen
-//   padding-top: 0; // Adjust padding as needed
-// `;
 
 export const VerificationForm = styled(Form)`
   width: 100%; // Allow the form to fill the container
