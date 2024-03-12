@@ -14,6 +14,8 @@ function App() {
   const [signIn, toggle] = useState(true);
   const [isVerifying, setIsVerifying] = useState(false);
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const [signInError, setSignInError] = useState(null);
+  const [signUpError, setSignUpError] = useState(null);
 
   const handleSignUp = async (event) => {
     event.preventDefault();
@@ -41,8 +43,13 @@ function App() {
 
       // Success Message here
     } else {
-      console.error("Signup failed");
-      // Handle errors here
+      const errorMessage = await response.text(); // Get error message from response
+        console.error("Signup failed:", errorMessage);
+        setSignUpError("Signup failed"); // Set sign-up error message
+      }
+    } catch (error) {
+      console.error("Signup failed:", error.message);
+      setSignUpError("Network error. Please try again."); // Set sign-up error message for network error
     }
   };
 
@@ -66,13 +73,13 @@ function App() {
         setIsSignedIn(true);
         navigate("/weekdays");
         // Perform actions on successful sign-in, e.g., redirect or update UI
-      } else {
-        console.error("Sign in failed");
-        // Handle sign-in errors, e.g., show message to user
+      } else const errorMessage = await response.text(); // Get error message from response
+        console.error("Sign in failed:", errorMessage);
+        setSignInError("Signin failed"); // Set sign-in error message
       }
     } catch (error) {
       console.error("Network error:", error);
-      // Handle network errors
+      setSignInError("Network error. Please try again."); // Set sign-in error message for network error
     }
   };
 
