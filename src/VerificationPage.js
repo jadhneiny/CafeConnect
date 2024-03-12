@@ -2,13 +2,13 @@
 import React, { useState } from "react";
 import * as Components from "./Components";
 
-function VerificationPage({ navigateToLogin, returnToHome }) { // Corrected props
+function VerificationPage({ navigateToLogin, returnToHome }) { 
   const [code, setCode] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
     // Assuming navigateToLogin is defined to handle post-verification logic
-    navigateToLogin(); // This could also potentially be returnToHome depending on your flow
+    navigateToLogin(); // This could also potentially be returnToHome depending on flow
   };
 
   return (

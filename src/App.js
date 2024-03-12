@@ -30,6 +30,7 @@ function App() {
     if (response.ok) {
       console.log("Signup successful");
       setIsSignedIn(true);
+      return <WeekDaysPage />;
       // Success Message here
     } else {
       console.error("Signup failed");
@@ -55,6 +56,7 @@ function App() {
       if (response.ok) {
         console.log("Sign in successful");
         setIsSignedIn(true);
+        return <WeekDaysPage />;
         // Perform actions on successful sign-in, e.g., redirect or update UI
       } else {
         console.error("Sign in failed");
