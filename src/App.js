@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import VerificationPage from "./VerificationPage";
 import {
   BrowserRouter as Router,
@@ -10,7 +10,11 @@ import * as Components from "./Components";
 import WeekDaysPage from "./WeekDaysPage";
 
 function App() {
-  const navigate = useNavigate();
+  const [navigate, setNavigate] = useState();
+  useEffect(() => {
+    setNavigate(useNavigate());
+  }, []);
+  
   const [signIn, toggle] = useState(true);
   const [isVerifying, setIsVerifying] = useState(false);
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -27,25 +31,25 @@ function App() {
       password: formData.get("password"),
     };
 
-    // Send data to the server
-    const response = await fetch("/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    try {
+      // Send data to the server
+      const response = await fetch("/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
-    if (response.ok) {
-      console.log("Signup successful");
-      setIsSignedIn(true);
-      navigate("/weekdays");
-
-      // Success Message here
-    } else {
-      const errorMessage = await response.text(); // Get error message from response
+      if (response.ok) {
+        console.log("Signup successful");
+        setIsSignedIn(true);
+        navigate("/weekdays");
+        // Success Message here
+      } else {
+        const errorMessage = await response.text(); // Get error message from response
         console.error("Signup failed:", errorMessage);
-        setSignUpError("Signup failed"); // Set sign-up error message
+        setSignUpError(errorMessage); // Set sign-up error message
       }
     } catch (error) {
       console.error("Signup failed:", error.message);
@@ -73,9 +77,10 @@ function App() {
         setIsSignedIn(true);
         navigate("/weekdays");
         // Perform actions on successful sign-in, e.g., redirect or update UI
-      } else const errorMessage = await response.text(); // Get error message from response
+      } else {
+        const errorMessage = await response.text(); // Get error message from response
         console.error("Sign in failed:", errorMessage);
-        setSignInError("Signin failed"); // Set sign-in error message
+        setSignInError(errorMessage); // Set sign-in error message
       }
     } catch (error) {
       console.error("Network error:", error);
@@ -97,7 +102,7 @@ function App() {
   }
 
   return (
-  <Components.Container>
+<Components.Container>
     {/* Sign-up error message */}
     {signUpError && (
       <Components.ErrorParagraph className="error-message">
