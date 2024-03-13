@@ -42,7 +42,7 @@ function App() {
 
     if (response.ok) {
       console.log("Signup successful");
-      setIsSignedIn(true);
+      // setIsSignedIn(true);
     } else {
       console.error("Signup failed");
       // Handle errors here

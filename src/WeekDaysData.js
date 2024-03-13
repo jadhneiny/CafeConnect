@@ -5,6 +5,7 @@ export const WeekDaysData = [
   {
     title: "CafeConnect",
     icon: <FastfoodIcon />,
+//    link: "/App",
   },
   {
     title: "Monday",
