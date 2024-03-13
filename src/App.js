@@ -42,7 +42,7 @@ function App() {
 
     if (response.ok) {
       console.log("Signup successful");
-      // setIsSignedIn(true); 
+      // setIsSignedIn(true);
       // If this is uncommented, the user will directly be taken to the days of the week page after successful signup
     } else {
       console.error("Signup failed");
@@ -70,7 +70,7 @@ function App() {
         console.log("Sign in successful");
         setIsSignedIn(true);
       } else {
-        const errorMessage = "Sign in failed"; // Default error message
+        const errorMessage = "Sign In failed"; // Default error message
         console.error(errorMessage);
         setSignInError(errorMessage);
       }
