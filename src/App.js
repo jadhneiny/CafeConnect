@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import VerificationPage from "./VerificationPage";
+import { SuccessMessage } from "./Components";
 import {
   BrowserRouter as Router,
   Routes,
@@ -15,6 +16,7 @@ function App() {
   const [isVerifying, setIsVerifying] = useState(false);
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [signInError, setSignInError] = useState(""); // State to store the sign-in error message
+  const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
     if (isSignedIn) {
@@ -24,7 +26,7 @@ function App() {
 
   const handleSignUp = async (event) => {
     event.preventDefault();
-    setIsVerifying(true);
+    //setIsVerifying(true);
     const formData = new FormData(event.target);
     const data = {
       name: formData.get("name"),
@@ -42,11 +44,15 @@ function App() {
 
     if (response.ok) {
       console.log("Signup successful");
-      // setIsSignedIn(true);
-      // If this is uncommented, the user will directly be taken to the days of the week page after successful signup
+      navigate("/verification");
+      setSuccessMessage("Sign Up Successful"); // Set the success message
+      setSignInError(""); // Clear any existing error messages
     } else {
-      console.error("Signup failed");
       // Handle errors here
+      const errorMessage = "Sign Up failed"; // Default error message
+      console.error(errorMessage);
+      setSignInError(errorMessage);
+      setSuccessMessage(""); // Clear any existing success messages
     }
   };
 
@@ -95,9 +101,12 @@ function App() {
       {signInError && (
         <Components.ErrorParagraph>{signInError}</Components.ErrorParagraph>
       )}
-
+      {successMessage && <SuccessMessage>{successMessage}</SuccessMessage>}
       <Components.SignUpContainer signinIn={signIn}>
         <Components.Form onSubmit={handleSignUp}>
+          {signInError && (
+            <Components.ErrorParagraph>{signInError}</Components.ErrorParagraph>
+          )}
           <Components.Title>Create Account</Components.Title>
           <Components.Input name="name" type="text" placeholder="Name" />
           <Components.Input name="email" type="email" placeholder="Email" />
@@ -163,6 +172,14 @@ function AppWrapper() {
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/weekdays" element={<WeekDaysPage />} />
+        <Route path="/verification" element={<VerificationPage />} />
+        <Route path="/MondayMenu" element={<MondayMenu />} />
+        <Route path="/TuesdayMenu" element={<TuesdayMenu />} />
+        <Route path="/WednesdayMenu" element={<WednesdayMenu />} />
+        <Route path="/ThursdayMenu" element={<ThursdayMenu />} />
+        <Route path="/FridayMenu" element={<FridayMenu />} />
+        <Route path="/SaturdayMenu" element={<SaturdayMenu />} />
+        <Route path="/SundayMenu" element={<SundayMenu />} />
       </Routes>
     </Router>
   );
