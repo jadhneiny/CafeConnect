@@ -17,6 +17,14 @@ export const ErrorParagraph = styled.p`
   text-align: center; /* Center align the text */
 `;
 
+// Styled component for success messages
+export const SuccessMessage = styled.p`
+  color: green; /* Set the color to green */
+  font-weight: bold; /* Set the font weight to bold */
+  margin-top: 10px; /* Add margin to separate from other elements */
+  text-align: center; /* Center align the text */
+`;
+
 export const SignUpContainer = styled.div`
   position: absolute;
   top: 0;
