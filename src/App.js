@@ -23,11 +23,15 @@ function App() {
   const [signIn, toggle] = useState(true);
   const [isVerifying, setIsVerifying] = useState(false);
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [signInError, setSignInError] = useState(""); // State to store the sign-in error message
   const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
-    if (isSignedIn) {
+    if (isAdmin) {
+      //navigate("/AdminPage");  //change to navigate to admin page
+    }
+    else if (isSignedIn) {
       navigate("/weekdays");
     }
   }, [isSignedIn, navigate]);
@@ -82,6 +86,9 @@ function App() {
 
       if (response.ok) {
         console.log("Sign in successful");
+        if (formData.get("email") == "cafeconnect@admin.com") {
+          setIsAdmin(true);
+        }
         setIsSignedIn(true);
       } else {
         const errorMessage = "Sign In failed"; // Default error message
