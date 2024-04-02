@@ -26,3 +26,4 @@ function WeekDaysPage() {
     </div>
   );
 }
+export default WeekDaysPage;
