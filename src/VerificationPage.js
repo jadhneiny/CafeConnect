@@ -1,19 +1,48 @@
 // VerificationPage.js
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import * as Components from "./Components";
 
 function VerificationPage({ navigateToLogin }) {
   const [code, setCode] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+  const email = location.state?.email; // Retrieve the email from the state passed by navigate
 
   const returnToHome = () => {
     navigate("/");
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Logic for verification will go here
+    
+    if (!email || !code) {
+      alert('Email or verification code is missing.');
+      return;
+    }
+
+    try {
+      const response = await fetch('/verify', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, verificationCode: code }),
+      });
+
+      if (response.ok) {
+        // Verification successful
+        alert('Email verified successfully!');
+        navigate('/');
+      } else {
+        // Handle verification failure
+        const errorText = await response.text();
+        alert(`Failed to verify email: ${errorText}`);
+      }
+    } catch (error) {
+      console.error('Verification error:', error);
+      alert('An error occurred during verification. Please try again.');
+    }
   };
 
   return (
