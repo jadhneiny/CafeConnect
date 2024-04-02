@@ -9,6 +9,14 @@ import {
 } from "react-router-dom";
 import * as Components from "./Components";
 import WeekDaysPage from "./WeekDaysPage";
+import MondayMenu from './MondayMenu';
+import TuesdayMenu from './TuesdayMenu';
+import WednesdayMenu from './WednesdayMenu';
+import ThursdayMenu from './ThursdayMenu';
+import FridayMenu from './FridayMenu';
+import SaturdayMenu from './SaturdayMenu';
+import SundayMenu from './SundayMenu';
+
 
 function App() {
   const navigate = useNavigate();
@@ -44,7 +52,7 @@ function App() {
 
     if (response.ok) {
       console.log("Signup successful");
-      navigate("/verification");
+      navigate('/verification', { state: { email: data.email } });
       setSuccessMessage("Sign Up Successful"); // Set the success message
       setSignInError(""); // Clear any existing error messages
     } else {
