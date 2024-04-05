@@ -55,3 +55,43 @@
 .row #title {
   flex-grow: 1; /* Allow the title to take up remaining space */
 }
+
+
+
+/* AdminPage specific styles */
+.AdminPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Adjust height to fill the screen */
+  background-color: #B4D4FF; /* Matching the app's background */
+}
+
+.AdminButtons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.AdminButton, .BackButton {
+  background-color: #4067AE; /* Matching the WeekDaysList color */
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  margin: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.AdminButton:hover, .BackButton:hover {
+  background-color: #081A54; /* Hover effect matching WeekDaysList */
+}
+
+/* Special styling for the back button if needed */
+.BackButton {
+  /* Additional styles for the Back button if you want to differentiate it */
+}
+

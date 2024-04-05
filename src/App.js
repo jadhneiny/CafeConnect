@@ -9,29 +9,29 @@ import {
 } from "react-router-dom";
 import * as Components from "./Components";
 import WeekDaysPage from "./WeekDaysPage";
-import MondayMenu from './MondayMenu';
-import TuesdayMenu from './TuesdayMenu';
-import WednesdayMenu from './WednesdayMenu';
-import ThursdayMenu from './ThursdayMenu';
-import FridayMenu from './FridayMenu';
-import SaturdayMenu from './SaturdayMenu';
-import SundayMenu from './SundayMenu';
-
+import MondayMenu from "./MondayMenu";
+import TuesdayMenu from "./TuesdayMenu";
+import WednesdayMenu from "./WednesdayMenu";
+import ThursdayMenu from "./ThursdayMenu";
+import FridayMenu from "./FridayMenu";
+import SaturdayMenu from "./SaturdayMenu";
+import SundayMenu from "./SundayMenu";
+import AdminPage from "./AdminPage";
 
 function App() {
-  const navigate = useNavigate();
+  
   const [signIn, toggle] = useState(true);
   const [isVerifying, setIsVerifying] = useState(false);
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [signInError, setSignInError] = useState(""); // State to store the sign-in error message
   const [successMessage, setSuccessMessage] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isAdmin) {
-      //navigate("/AdminPage");  //change to navigate to admin page
-    }
-    else if (isSignedIn) {
+      navigate("/admin"); // navigate to admin page
+    } else if (isSignedIn) {
       navigate("/weekdays");
     }
   }, [isSignedIn, navigate]);
@@ -56,7 +56,7 @@ function App() {
 
     if (response.ok) {
       console.log("Signup successful");
-      navigate('/verification', { state: { email: data.email } });
+      navigate("/verification", { state: { email: data.email } });
       setSuccessMessage("Sign Up Successful"); // Set the success message
       setSignInError(""); // Clear any existing error messages
     } else {
@@ -186,6 +186,7 @@ function AppWrapper() {
     <Router>
       <Routes>
         <Route path="/" element={<App />} />
+        <Route path="/admin" element={<AdminPage />} />
         <Route path="/weekdays" element={<WeekDaysPage />} />
         <Route path="/verification" element={<VerificationPage />} />
         <Route path="/MondayMenu" element={<MondayMenu />} />
