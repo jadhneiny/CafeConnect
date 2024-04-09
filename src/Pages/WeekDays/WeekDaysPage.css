@@ -1,0 +1,47 @@
+/* Update the WeekDaysList class to better center and size the list */
+.WeekDaysList {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: auto; /* Adjusted for better spacing */
+    background-color: #4067AE;
+    border-radius: 10px; /* Optional: adds rounded corners for a modern look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: adds shadow for depth */
+  }
+  
+  /* Refine the appearance of each row */
+  .WeekDaysList .row {
+    width: auto;
+    padding: 10px 20px; /* Adjust padding for better spacing */
+    border-bottom: 1px solid white; /* Keep the border at the bottom */
+    color: white;
+    display: flex;
+    align-items: center;
+    font-size: large; /* Adjust the font size for better readability */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+  }
+  
+  /* Remove the last border for a cleaner look */
+  .WeekDaysList .row:last-child {
+    border-bottom: none;
+  }
+  
+  /* Hover and active state for list items */
+  .WeekDaysList .row:hover, .WeekDaysList #active {
+    background-color: #081A54;
+    cursor: pointer;
+  }
+  
+  /* Icon and title alignment */
+  .row #icon, .row #title {
+    display: flex;
+    align-items: center;
+  }
+  
+  .row #icon {
+    margin-right: 10px; /* Add some space between the icon and the title */
+  }
+  
+  .row #title {
+    flex-grow: 1; /* Allow the title to take up remaining space */
+  }

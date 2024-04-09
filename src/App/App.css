@@ -1,0 +1,11 @@
+/* Adjust the overall application styles */
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: #B4D4FF;
+}
+
+
