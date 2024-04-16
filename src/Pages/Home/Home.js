@@ -18,10 +18,10 @@ function Home() {
 
     useEffect(() => {
         if (isAdmin) {
-            //navigate("/AdminPage");  //change to navigate to admin page
+            navigate("/AdminPage");  // navigate to admin page
         }
         else if (isSignedIn) {
-            navigate("/weekdays");
+            navigate("/weekdays"); // navigate to weekdays page
         }
     }, [isSignedIn, navigate, isAdmin]);
 
