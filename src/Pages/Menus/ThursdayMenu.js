@@ -1,18 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Menus.css'; 
 
 const ThursdayMenu = () => {
-  // State to store the menu items
-  const [menuItems] = useState([
-    { id: 1, name: 'Coffee', price: 2.5, stock: 10 },
-    { id: 2, name: 'Tea', price: 2, stock: 5 },
-    { id: 3, name: 'Sandwich', price: 5, stock: 0 },
-    { id: 4, name: 'Salad', price: 6, stock: 3 },
-    { id: 5, name: 'Soup', price: 4, stock: 8 },
+  const [MenuItems, setMenuItems] = useState([]);
 
-  ]);
+  useEffect(() => {
+    const fetchMenuItems = async () => {
+      try {
+        const response = await fetch('/api/getMenuItems'); 
+        const data = await response.json();
+        setMenuItems(data);
+      } catch (error) {
+        console.error('Failed to fetch menu items:', error);
+      }
+    };
 
-  // Function to determine the stock status for each item
+    fetchMenuItems();
+  }, []); 
+
+
+  
+
   const getStockStatus = (stock) => {
     if (stock === 0) {
       return "Out of stock";
@@ -28,12 +36,12 @@ const ThursdayMenu = () => {
       <h1 className="main-title">CafeConnect</h1>
       <h2 className="sub-title">Thursday's Menu</h2>
       <div className="menu-grid">
-        {menuItems.map(item => (
+        {MenuItems.map(item => (
           <div key={item.id} className="menu-item">
             <span className="item-name">{item.name}</span>
             <span className="item-price">${item.price}</span>
-            <span className={`stock-status ${getStockStatus(item.stock).toLowerCase()}`}>
-              {getStockStatus(item.stock)}
+            <span className={`stock-status ${getStockStatus(item.availability.Thursday).toLowerCase()}`}>
+              {getStockStatus(item.availability.Thursday)}
             </span>
           </div>
         ))}
