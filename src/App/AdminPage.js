@@ -2,48 +2,97 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './App.css';
 
-// Mock data for initial menu items
-const initialMenuItems = [
-  { id: 1, name: 'Item 1', description: 'Description 1', price: '10' },
-  { id: 2, name: 'Item 2', description: 'Description 2', price: '15' },
-  { id: 3, name: 'Item 3', description: 'Description 3', price: '20' },
-];
-
 function AdminPage() {
   const navigate = useNavigate();
-  const [menuItems, setMenuItems] = useState(initialMenuItems);
-  const [newItem, setNewItem] = useState({ name: '', description: '', price: '' });
-  const [editItemId, setEditItemId] = useState(null);
+  const [menuItems, setMenuItems] = useState([]);
+  const [newItem, setNewItem] = useState({
+    name: '',
+    description: '',
+    price: '',
+    availability: {
+      Monday: '',
+      Tuesday: '',
+      Wednesday: '',
+      Thursday: '',
+      Friday: '',
+      Saturday: '',
+      Sunday: ''
+    }
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setNewItem({ ...newItem, [name]: value });
+    if (name in newItem.availability) {
+      setNewItem({
+        ...newItem,
+        availability: {
+          ...newItem.availability,
+          [name]: value
+        }
+      });
+    } else {
+      setNewItem({ ...newItem, [name]: value });
+    }
   };
 
   const addItem = () => {
-    const newItemWithId = { ...newItem, id: Date.now() };
-    setMenuItems([...menuItems, newItemWithId]);
-    setNewItem({ name: '', description: '', price: '' });
+    const itemToSubmit = {
+      name: newItem.name.trim(),
+      description: newItem.description.trim(),
+      price: parseFloat(newItem.price),
+      availability: {
+        Monday: parseInt(newItem.availability.Monday, 10),
+        Tuesday: parseInt(newItem.availability.Tuesday, 10),
+        Wednesday: parseInt(newItem.availability.Wednesday, 10),
+        Thursday: parseInt(newItem.availability.Thursday, 10),
+        Friday: parseInt(newItem.availability.Friday, 10),
+        Saturday: parseInt(newItem.availability.Saturday, 10),
+        Sunday: parseInt(newItem.availability.Sunday, 10)
+      }
+    };
+  
+    fetch('/api/createItem', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(itemToSubmit)
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        // Log or alert the status code and response text for debugging
+        response.text().then(text => {
+          throw new Error(`Failed to create item: Status ${response.status}, ${text}`);
+        });
+      }
+    })
+    .then(data => {
+      setMenuItems(prevItems => [...prevItems, data]);
+      setNewItem({
+        name: '',
+        description: '',
+        price: '',
+        availability: {
+          Monday: '',
+          Tuesday: '',
+          Wednesday: '',
+          Thursday: '',
+          Friday: '',
+          Saturday: '',
+          Sunday: ''
+        }
+      });
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Error adding item: ' + error.message);
+    });
   };
-
-  const startEditItem = (id) => {
-    setEditItemId(id);
-    const item = menuItems.find(item => item.id === id);
-    setNewItem({ name: item.name, description: item.description, price: item.price });
-  };
-
-  const saveItem = () => {
-    const updatedItems = menuItems.map(item => 
-      item.id === editItemId ? { ...item, ...newItem } : item
-    );
-    setMenuItems(updatedItems);
-    setEditItemId(null);
-    setNewItem({ name: '', description: '', price: '' });
-  };
-
-  const deleteItem = (id) => {
-    setMenuItems(menuItems.filter(item => item.id !== id));
-  };
+  
+  
+  
 
   const navigateBack = () => {
     navigate('/weekdays');
@@ -73,18 +122,24 @@ function AdminPage() {
           onChange={handleChange} 
           placeholder="Price" 
         />
-        {editItemId ? (
-          <button onClick={saveItem}>Save Item</button>
-        ) : (
-          <button onClick={addItem}>Add Item</button>
-        )}
+        {Object.keys(newItem.availability).map(day => (
+          <input 
+            key={day}
+            type="text" 
+            name={day}
+            value={newItem.availability[day]} 
+            onChange={handleChange} 
+            placeholder={`Availability for ${day}`} 
+          />
+        ))}
+        <button onClick={addItem}>Add Item</button>
       </div>
       <ul>
         {menuItems.map(item => (
           <li key={item.id}>
-            {item.name} - {item.description} - ${item.price}
-            <button onClick={() => startEditItem(item.id)}>Edit</button>
-            <button onClick={() => deleteItem(item.id)}>Delete</button>
+            {item.name} - {item.description} - ${item.price} - Availabilities: {JSON.stringify(item.availability)}
+            <button>Edit</button>
+            <button>Delete</button>
           </li>
         ))}
       </ul>
