@@ -16,6 +16,7 @@ import FridayMenu from '../Pages/Menus/FridayMenu';
 import SaturdayMenu from '../Pages/Menus/SaturdayMenu';
 import SundayMenu from '../Pages/Menus/SundayMenu';
 import Home from "../Pages/Home/Home";
+import AdminPage from "./AdminPage";
 
 function AppWrapper() {
   return (
@@ -32,6 +33,7 @@ function AppWrapper() {
         <Route path="/FridayMenu" element={<FridayMenu />} />
         <Route path="/SaturdayMenu" element={<SaturdayMenu />} />
         <Route path="/SundayMenu" element={<SundayMenu />} />
+        <Route path="/AdminPage" element={<AdminPage />} />
       </Routes>
     </Router>
   );
