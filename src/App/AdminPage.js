@@ -91,7 +91,30 @@ function AdminPage() {
     });
   };
   
-  
+const deleteItem = (itemId) => {
+  fetch(`/api/menuItems/${itemId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error('Failed to delete item');
+    }
+  })
+  .then(data => {
+    // Update state to reflect the deletion
+    setMenuItems(prevItems => prevItems.filter(item => item._id !== itemId));
+    console.log('Item deleted successfully');
+  })
+  .catch(error => {
+    console.error('Error deleting item:', error);
+  });
+};
+
   
 
   const navigateBack = () => {
@@ -139,7 +162,7 @@ function AdminPage() {
           <li key={item.id}>
             {item.name} - {item.description} - ${item.price} - Availabilities: {JSON.stringify(item.availability)}
             <button>Edit</button>
-            <button>Delete</button>
+            <button onClick={() => deleteItem(item._id)}>Delete</button> {/* Call deleteItem with item ID */}
           </li>
         ))}
       </ul>
