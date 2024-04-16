@@ -5,6 +5,8 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+
+import AdminPage from "../App/AdminPage";
 import WeekDaysPage from "../Pages/WeekDays/WeekDaysPage";
 import MondayMenu from '../Pages/Menus/MondayMenu';
 import TuesdayMenu from '../Pages/Menus/TuesdayMenu';
@@ -21,6 +23,7 @@ function AppWrapper() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/weekdays" element={<WeekDaysPage />} />
+        <Route path="/adminpage" element={<AdminPage />} />
         <Route path="/verification" element={<VerificationPage />} />
         <Route path="/MondayMenu" element={<MondayMenu />} />
         <Route path="/TuesdayMenu" element={<TuesdayMenu />} />
