@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './App.css';
 
@@ -19,8 +19,10 @@ function AdminPage() {
       Sunday: ''
     }
   });
+  const [editing, setEditing] = useState(false);
+  const [editingId, setEditingId] = useState(null);
 
-  useEffect(() => {//
+  useEffect(() => {
     fetchMenuItems();
   }, []);
 
@@ -29,7 +31,7 @@ function AdminPage() {
       .then(response => response.json())
       .then(data => setMenuItems(data))
       .catch(error => console.error('Error fetching menu items:', error));
-  };//
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -125,33 +127,52 @@ const deleteItem = (itemId) => {
     console.error('Error deleting item:', error);
   });
 };
-
-const editItem = (itemId, updatedItem) => {
-  fetch(`/api/menuItems/${itemId}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(updatedItem)
-  })
-  .then(response => {
-    if (response.ok) {
-      return response.json();
-    } else {
-      throw new Error('Failed to update item');
-    }
-  })
-  .then(data => {
-    setMenuItems(prevItems => prevItems.map(item => item._id === itemId ? data : item));
-    console.log('Item updated successfully');
-  })
-  .catch(error => {
-    console.error('Error updating item:', error);
-  });
-};
-
   const navigateBack = () => {
     navigate('/weekdays');
+};
+
+
+
+  const startEdit = (item) => {
+    setNewItem(item);
+    setEditing(true);
+    setEditingId(item._id);
+  };
+
+  const cancelEdit = () => {
+    setEditing(false);
+    setNewItem({
+      name: '',
+      description: '',
+      price: '',
+      availability: {
+        Monday: '',
+        Tuesday: '',
+        Wednesday: '',
+        Thursday: '',
+        Friday: '',
+        Saturday: '',
+        Sunday: ''
+      }
+    });
+  };
+
+  const submitEdit = () => {
+    fetch(`/api/menuItems/${editingId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newItem)
+    })
+    .then(response => response.json())
+    .then(data => {
+      setMenuItems(prevItems => prevItems.map(item => item._id === editingId ? data : item));
+      cancelEdit();
+    })
+    .catch(error => {
+      console.error('Error updating item:', error);
+    });
   };
 
   return (
@@ -190,12 +211,39 @@ const editItem = (itemId, updatedItem) => {
         ))}
         <button onClick={addItem}>Add Item</button>
       </div>
+      
+      {editing ? (
+        <div className="editForm">
+          <input type="text" name="name" value={newItem.name} onChange={handleChange} />
+          <textarea name="description" value={newItem.description} onChange={handleChange} />
+          <input type="text" name="price" value={newItem.price} onChange={handleChange} />
+          {Object.keys(newItem.availability).map(day => (
+            <input 
+              key={day}
+              type="text" 
+              name={day}
+              value={newItem.availability[day]} 
+              onChange={handleChange} 
+              placeholder={`Availability for ${day}`} 
+            />
+          ))}
+          <button onClick={submitEdit}>Save Changes</button>
+          <button onClick={cancelEdit}>Cancel</button>
+        </div>
+      ) : (
+        <div>
+          {/* <button onClick={() => navigate('/weekdays')}>Back to Days of the Week</button> */}
+          {/* <button onClick={() => startEdit({name: '', description: '', price: '', availability: { Monday: '', Tuesday: '', Wednesday: '', Thursday: '', Friday: '', Saturday: '', Sunday: '' }})}>Add New Item</button> */}
+        </div>
+      )}
+
+
       <ul>
         {menuItems.map(item => (
-          <li key={item.id}>
-            {item.name} - {item.description} - ${item.price} - Availabilities: {JSON.stringify(item.availability)}
-            <button onClick={() => editItem(item._id, { name: 'Updated Item Name' })}>Edit</button>
-            <button onClick={() => deleteItem(item._id)}>Delete</button> {/* Call deleteItem with item ID */}
+          <li key={item._id}>
+            {item.name} - {item.description} - ${item.price} - Availability: {JSON.stringify(item.availability)}
+            <button onClick={() => startEdit(item)}>Edit</button>
+            <button onClick={() => deleteItem(item._id)}>Delete</button>
           </li>
         ))}
       </ul>
