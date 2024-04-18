@@ -1,4 +1,3 @@
-/* Adjust the overall application styles */
 .App {
   display: flex;
   justify-content: center;
@@ -8,4 +7,124 @@
   background-color: #B4D4FF;
 }
 
+.AdminPage {
+  width: 80%;
+  margin: auto;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  border-radius: 8px;
+}
 
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+input[type="text"], textarea {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+}
+
+button.btn-primary {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+button.btn-secondary {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.item-list {
+  list-style: none;
+  padding: 0;
+}
+
+.btn-edit, .btn-delete {
+  margin-left: 10px;
+}
+
+
+.item-description, .item-price, .item-availability {
+  display: block;
+}
+.sticky-header {
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 1000;
+  padding: 10px 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.scrollable-form {
+  max-height: 150px; 
+  overflow-y: auto;
+}
+
+.availability-entry {
+  display: flex;
+  align-items: center;
+}
+
+.availability-entry label {
+  margin-right: 10px;
+}
+
+.items-container {
+  max-height: 60vh; 
+  overflow-y: auto;
+}
+
+.item-list {
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  background-color: #f9f9f9;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.item-details {
+  margin-bottom: 10px;
+}
+
+.item-name {
+  font-weight: bold;
+}
+
+.item-description, .item-price, .item-availability {
+  display: block; 
+}
+
+.item-availability span {
+  display: block; 
