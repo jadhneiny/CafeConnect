@@ -71,7 +71,7 @@ button.btn-secondary {
 
 
 .item-description, .item-price, .item-availability {
-  display: block;
+  display: block; /* Ensures each detail is on a new line */
 }
 .sticky-header {
   position: sticky;
@@ -83,7 +83,7 @@ button.btn-secondary {
 }
 
 .scrollable-form {
-  max-height: 150px; 
+  max-height: 150px;  /* Adjust based on your form size */
   overflow-y: auto;
 }
 
@@ -97,7 +97,7 @@ button.btn-secondary {
 }
 
 .items-container {
-  max-height: 60vh; 
+  max-height: 60vh; /* adjust based on your preference */
   overflow-y: auto;
 }
 
@@ -123,8 +123,9 @@ button.btn-secondary {
 }
 
 .item-description, .item-price, .item-availability {
-  display: block; 
+  display: block; /* Ensures each detail is on a new line */
 }
 
 .item-availability span {
-  display: block; 
+  display: block; /* Each availability entry on a new line */
+}

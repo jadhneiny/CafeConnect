@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Menus.css';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import "./Menus.css";
 
 const ThursdayMenu = () => {
   const navigate = useNavigate();
@@ -9,11 +9,11 @@ const ThursdayMenu = () => {
   useEffect(() => {
     const fetchMenuItems = async () => {
       try {
-        const response = await fetch('/api/getMenuItems');
+        const response = await fetch("/api/getMenuItems");
         const data = await response.json();
-        setMenuItems(data.filter(item => item.availability.Thursday !== ''));
+        setMenuItems(data.filter((item) => item.availability.Thursday !== ""));
       } catch (error) {
-        console.error('Failed to fetch menu items:', error);
+        console.error("Failed to fetch menu items:", error);
       }
     };
 
@@ -21,7 +21,7 @@ const ThursdayMenu = () => {
   }, []);
 
   const getStockStatus = (stock) => {
-    if (stock === 0) {
+    if (stock < 1) {
       return "Out of stock";
     } else if (stock <= 3) {
       return "Low in stock";
@@ -31,7 +31,7 @@ const ThursdayMenu = () => {
   };
 
   const handleBack = () => {
-    navigate('/weekdays');
+    navigate("/weekdays");
   };
 
   return (
@@ -39,18 +39,24 @@ const ThursdayMenu = () => {
       <div className="main-title">CafeConnect</div>
       <h2 className="sub-title">Thursday's Menu</h2>
       <div className="menu-grid">
-        {MenuItems.map(item => (
+        {MenuItems.map((item) => (
           <div key={item.id} className="menu-item">
             <span className="item-name">{item.name}</span>
             <span className="item-description">{item.description}</span>
             <span className="item-price">${item.price}</span>
-            <span className={`stock-status ${getStockStatus(item.availability.Thursday).toLowerCase()}`}>
+            <span
+              className={`stock-status ${getStockStatus(
+                item.availability.Thursday
+              ).toLowerCase()}`}
+            >
               {getStockStatus(item.availability.Thursday)}
             </span>
           </div>
         ))}
       </div>
-      <button onClick={handleBack} className="back-button">Back to Weekdays Page</button>
+      <button onClick={handleBack} className="back-button">
+        Back to Weekdays Page
+      </button>
     </div>
   );
 };
